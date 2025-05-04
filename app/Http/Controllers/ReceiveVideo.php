@@ -25,20 +25,12 @@ class ReceiveVideo extends Controller
     public function handle(Request $request)
 {
     // Verificação do token
-    if (!$request->bearerToken() || $request->bearerToken() !== 'Jib8RwDEIzwS87Emj') {
+    if (!$request->bearerToken() || $request->bearerToken() !== env('HEADER_ACCESS')) {
         Log::warning("Token de autenticação ausente.");
         return response()->json(['error' => 'Token de autenticação ausente'], 401);
     }
 
-    /*
 
-    Log::info('Recebida uma nova solicitação para upload de vídeo.', [
-        'ip' => $request->ip(),
-        'user_agent' => $request->userAgent(),
-        'inputs' => $request->all(),
-    ]);
-    
-    */
 
     if ($request->hasFile('video')) {
         $video = $request->file('video');
@@ -91,6 +83,16 @@ class ReceiveVideo extends Controller
                 }
 
                 $url = "https://wasabi-deez.b-cdn.net/" . $storagePath;
+        
+
+        
+        
+        Log::info('Recebida uma nova solicitação para upload de vídeo.', [
+            'ip' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'inputs' => $request->all(),
+        ]);
+        
         
                 return response()->json([
                     'success' => true,

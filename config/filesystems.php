@@ -29,7 +29,17 @@ return [
     */
 
     'disks' => [
-
+        
+        'wasabi' => [
+            'driver' => 's3',
+            'key' => env('WASABI_KEY'),
+            'secret' => env('WASABI_SECRET'),
+            'region' => env('WASABI_REGION', 'us-east-1'),
+            'bucket' => env('WASABI_BUCKET'),
+            'endpoint' => env('WASABI_ENDPOINT', 'https://s3.wasabisys.com'),
+            'use_path_style_endpoint' => true,
+        ],
+        
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),

@@ -51,9 +51,19 @@ class ReceiveVideo extends Controller
 
             $videoInstance = $ffmpeg->open($originalPath);
 
-            $format = new X264('aac', 'libx264');
-            $format->setKiloBitrate(200);
-            $format->setAdditionalParameters(['-preset', 'slow', '-crf', '28']);
+            $isPremium = json_decode($request->input('isPremium'));
+            if($isPremium){
+                $format = new X264('aac', 'libx264');
+                $format->setKiloBitrate(600);
+                $format->setAdditionalParameters(['-preset', 'slow', '-crf', '20']);
+
+            }else{
+                $format = new X264('aac', 'libx264');
+                $format->setKiloBitrate(200);
+                $format->setAdditionalParameters(['-preset', 'slow', '-crf', '35']);
+
+            }
+
 
             $videoInstance->save($format, $compressedPath);
 
